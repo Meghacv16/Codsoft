@@ -1,0 +1,69 @@
+// this is a number game which is created using java
+// it will create a random number everytime and let's you guess the numberby providing hints
+
+import java.util.Scanner;
+
+public class Main{
+    static int min = 1;
+    static int max = 100;
+    static int targetNumber;
+    static int attempts;
+    static int score;
+
+    public static void main(String[] args) {
+        Scanner n = new Scanner(System.in);
+        System.out.println("Welcome to the Meghas Number Guessing Game!");
+        
+        boolean playOneMoreTime = true;
+        while (playOneMoreTime) {
+            targetNumber = (int) (Math.random() * (max - min + 1) + min);
+            playGame(n);
+            
+            System.out.println("Do you want to play again? (yes/no)");
+            String playOneMoreTimeChoice = n.next().toLowerCase();
+            playOneMoreTime = playOneMoreTimeChoice.equals("yes");
+        }
+        
+        System.out.println("Your final score: " + score);
+        n.close();
+    }
+
+    private static void playGame(Scanner n) {
+        System.out.println("I've picked a number between " + min + " and " + max + ". Can you guess it?");
+        attempts = 0;
+        while (attempts < 10) {
+            System.out.print("Enter your guess (or '0' for a hint): ");
+            int guess = n.nextInt();
+            attempts++;
+
+            if (guess == 0) {
+                giveHint();
+                continue;
+            }
+
+            if (guess < targetNumber) {
+                System.out.println("Too low! Try again.");
+            } else if (guess > targetNumber) {
+                System.out.println("Too high! Try again.");
+            } else {
+                System.out.println("Congratulations! You've guessed the number " + targetNumber + " correctly in " + attempts + " attempts.");
+                updateScore();
+                System.out.println("Your score: " + score);
+                break;
+            }
+        }
+        
+        if (attempts >= 10) {
+            System.out.println("Sorry, you've run out of attempts. The number was: " + targetNumber);
+        }
+    }
+
+    private static void giveHint() {
+        System.out.println("Hint: The number is between " + min + " and " + max + ".");
+    }
+
+    private static void updateScore() {
+        // Simple scoring system - higher score for fewer attempts and higher difficulty
+        score += (max / 10) * (max / attempts);
+    }
+}
