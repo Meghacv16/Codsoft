@@ -1,0 +1,48 @@
+//This is Java program to display student grades, marks and percentage
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the number of subjects:");
+        int numOfSubjects = sc.nextInt();
+
+        int totalMarks = 0;
+
+        System.out.println("Enter marks obtained in each subject (out of 100):");
+        for (int i = 1; i <= numOfSubjects; i++) {
+            System.out.print("Subject " + i + ": ");
+            int marks = sc.nextInt();
+            totalMarks += marks;
+        }
+
+        double avg_percentage = (double) totalMarks / numOfSubjects;
+
+        System.out.println("\nTotal Marks: " + totalMarks);
+        System.out.printf("Average Percentage: %.2f%%\n", avg_percentage);
+
+        String grade = calculateGrade(avg_percentage);
+        System.out.println("Grade: " + grade);
+
+        sc.close();
+    }
+
+    private static String calculateGrade(double averagePercentage) {
+        if (averagePercentage >= 90) {
+            return "A+";
+        } else if (averagePercentage >= 80) {
+            return "A";
+        } else if (averagePercentage >= 70) {
+            return "B+";
+        } else if (averagePercentage >= 60) {
+            return "B";
+        } else if (averagePercentage >= 50) {
+            return "C";
+        } else if (averagePercentage >= 40) {
+            return "D";
+        } else {
+            return "Fail";
+        }
+    }
+}
